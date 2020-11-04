@@ -13,7 +13,7 @@ import scipy.signal
 from scipy.signal import find_peaks
 import matplotlib.pyplot as plt
 from pm4py.objects.log.importer.xes import factory as xes_importer
-
+from pyclustering.cluster.optics import optics
 from pylab import *
 np.random.seed(1)
 
@@ -145,6 +145,7 @@ peaks, properties = find_peaks(yhatclip, prominence=prominence, width=minpts/2.0
 
 
 cc = {}
+cluster_objects_ids = {}
 entropy_all = {}
 
 outliers_list = []
@@ -159,7 +160,7 @@ for k in range(len(peaks)):
     outliers_list.extend(cc[k])
     cluster = [Zvectors[l] for l in cc[k]]
     
-    
+    cluster_objects_ids[k] = [remap_tids[o] for o in cc[k]]
     
     entropies = []
     for i in range(len(rels)):
